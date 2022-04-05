@@ -1,0 +1,424 @@
+\documentclass[11pt]{article}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[normalem]{ulem}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+
+\title{\textbf{Mathematical Modeling HW2}}
+\author{\textsc{Miyasaka Kion}}
+\date{\today}
+
+\begin{document}	
+\maketitle
+
+
+
+\section{Whales}
+1. Ecologists use the following model to represent the growth process of two competing species, $x$ and $y$ :
+
+$$
+\begin{aligned}
+&\frac{d x}{d t}=r_{1} x\left(1-\frac{x}{K_{1}}\right)-\alpha_{1} x y \\
+&\frac{d y}{d t}=r_{2} y\left(1-\frac{y}{K_{2}}\right)-\alpha_{2} x y
+\end{aligned}
+$$
+
+The variables $x$ and $y$ represent the number in each population; the parameters $r_{i}$ represent the intrinsic growth rates of each species; $K_{i}$ represents the maximum sustainable population in the absence of competition; and $\alpha_{i}$ represents the effects of competition. Studies of the blue whale and fin whale populations have determined the following parameter values $(t$ in years): 
+\begin{center}
+\begin{tabular}{ccc}
+\hline & Blue & Fin \\
+\hline$r$ & $0.05$ & $0.08$ \\
+$K$ & 150,000 & 400,000 \\
+$\alpha$ & $10^{-8}$ & $10^{-8}$ \\
+\hline
+\end{tabular}\\
+\end{center}
+\subsection{Question}
+(a) Determine the population levels $x$ and $y$ that maximize the number of new whales born each year. Use the five-step method, and model as an unconstrained optimization problem.\\
+\paragraph{Step 1.} Ask the question\\
+
+$$
+\begin{aligned}
+\text {Variables:}\\
+x &= \text {population of blue whale (whale)}\\
+y &= \text {population of fin whale (whale)}\\
+B &= \text {growth rate of blue whale (whale/ year)}\\
+F &= \text {growth rate of fin whale (whale/ year)}\\
+t &= \text {current year (year)}\\
+T &= \text {total growth rate (whale/year)}\\
+\text{Constants:}\\
+r_1 &= \text {intrinsic growth rate of blue whale}\\
+r_2 &= \text {intrinsic growth rate of fin whale}\\
+K_1 &= \text {maximum sustainable population of blue whale, in absence of competition }\\
+K_2 &= \text {maximum sustainable population of fin whale, in absence of competition }\\
+\alpha _1&= \text{effect of competition, w.r.t blue whale}\\
+\alpha _2&= \text{effect of competition, w.r.t fin whale}\\
+\\
+\text{Assumptions:}\\
+B &= r_{1} x\left(1-\frac{x}{K_{1}}\right)-\alpha_{1} x y \\
+F &=r_{2} y\left(1-\frac{y}{K_{2}}\right)-\alpha_{2} x y\\
+T &= B+F\\
+x& \geq 0 \\
+y&\geq 0 \\
+\text{Objective:}&\quad  \text{maximize T}\\
+\end{aligned}
+$$
+
+\paragraph{Step 2.} Select the modeling approach.
+
+Model this problem as an unconstrained optimize problem.
+\paragraph{Step 3. }Formulate the model.
+
+ Substitude constants into the equations of $B$ and $F$
+$$
+\begin{align}
+&B = 0.05 x\left(1-\frac{x}{150000}\right)-10^{-8} x y \\
+&F = 0.08 y\left(1-\frac{y}{400000}\right)-10^{-8} x y\\
+\end{align}
+$$
+
+
+let $f(x,y) = T = B+F$
+
+$$
+\begin{align}
+f(x,y) &=  0.05 x\left(1-\frac{x}{150000}\right)-10^{-8} x y + 0.08 y\left(1-\frac{y}{400000}\right)-10^{-8} x y\\
+f(x,y) &= -\frac{x y}{50000000}+0.05 \left(1-\frac{x}{150000}\right) x+0.08 \left(1-\frac{y}{400000}\right) y\end{align}
+$$
+
+
+\paragraph{Step 4.} Solve the model.
+
+Take the derivative of $f$, yields 
+$$
+\begin{aligned}
+\nabla f  = \left\{&0.05 \left( 1-\frac{x}{150000}\right) -\text{3.3333333333333335$\grave{ }$*${}^{\wedge}$-7} x-\frac{y}{50000000},\\
+&-\frac{x}{50000000}+0.08 \left(1-\frac{y}{400000}\right)-\text{2.0000000000000002$\grave{ }$*${}^{\wedge}$-7} y\right\}
+\end{aligned}
+$$
+
+letting $\nabla f = 0$, we have 
+
+$$
+\begin{cases}
+	0.05 \left(1-\frac{x}{150000}\right)-\text{3.3333333333333335$\grave{ }$*${}^{\wedge}$-7} x-\frac{y}{50000000} &= 0\\ \\
+	-\frac{x}{50000000}+0.08 \left(1-\frac{y}{400000}\right)-\text{2.0000000000000002$\grave{ }$*${}^{\wedge}$-7} y &= 0
+\end{cases}
+$$
+
+By solving the equation of $x$ and $y$ above, we get
+
+$$
+x = 69103.7, y = 196545,f(x,y)= 9589.38
+$$
+
+since $x \in \mathbb Z$, pick $x= 69104 , y = 196545$, and $f=9589.38 \approx 9589$.
+
+\paragraph{Step 5.} Answer the question.
+
+By the calculation above, the maximum number of new born  whale is $9589$, when the population of blue whale is $69104$ and fin whale is  $196545$.
+
+\\
+
+
+\subsection{Question}
+(b) Examine the sensitivity of the optimal population levels to the intrinsic growth rates $r_{1}$ and $r_{2}$.
+
+First we examine the sensitivity of $r_1$.
+
+$$
+f(x,y,r_1) =  r_1 x\left(1-\frac{x}{150000}\right)-10^{-8} x y + 0.08 y\left(1-\frac{y}{400000}\right)-10^{-8} x y
+$$
+let $\nabla f = 0$, we have
+$$
+\begin{align}
+	x\to \frac{300.\, -75000. \text{r1}}{0.000075\, -1. \text{r1}},y\to -\frac{196250. \text{r1}}{0.000075\, -1. \text{r1}}
+\end{align}
+\\
+$$
+$$
+\frac{\mathrm d x}{\mathrm d r_1}  =-\frac{294.375}{(0.000075\, -1. \text{r1})^2} = -118104
+$$
+
+
+when $r_1 = 0.05$.
+
+$$
+S(x,r_1) = \frac{\mathrm d x}{\mathrm d r_1} \cdot \frac{r_1}{x} = 0.0854542
+$$
+
+
+Similarly, 
+
+
+$$
+S(y,r_1) = \frac{\mathrm d y}{\mathrm d r_1} \cdot \frac{r_1}{y} = -0.00150225
+$$
+
+
+Now compute $S(T,r_1)$.
+$$
+\begin{align*}
+S(T,r_1) &= 
+\frac{\mathrm d f}{\mathrm d r_1}\cdot \frac{r_1}{T}
+ \\
+&=\left( \frac{\partial f}{\partial x}\cdot \frac{\mathrm d x}{\mathrm d r_1}  + \frac{\partial f}{\partial y}\cdot \frac{\mathrm d y}{\mathrm d r_1} + \frac{\partial f}{\partial r_1}\cdot 1 \right)\cdot \frac{r_1}{T}
+\\
+&=\left(  \frac{\partial f}{\partial r_1} \right)\cdot \frac{r_1}{T}
+\\
+&= 0.19432
+  \end{align*}
+$$
+
+Then we examine the sensitivity of $r_2$. The objective function is
+$$
+f(x,y,r_2) =  0.05 x\left(1-\frac{x}{150000}\right)-10^{-8} x y + r_2 y\left(1-\frac{y}{400000}\right)-10^{-8} x y
+$$
+
+
+with the similar method describe above,
+$$
+\nabla f = 0 \Rightarrow x\to -\frac{69000. \text{r2}}{0.00012\, -1. \text{r2}},y\to \frac{300.\, -200000. \text{r2}}{0.00012\, -1. \text{r2}} 
+\\
+$$
+
+
+Hence
+$$
+\begin{align}
+	S(x,r_2) & = -0.00150225\\
+	S(y,r_2) & = 0.017606\\
+	S(T,r_2) &  = 0.834007
+\end{align}
+$$
+
+\\
+\sout{
+(c) Examine the sensitivity of the optimal population levels to the environmental carrying capacities $K_{1}$ and $K_{2}$.
+(d) Assuming that $\alpha_{1}=\alpha_{2}=\alpha$, is it ever optimal for one species to become extinct?
+}
+
+\section{PC}
+6. A manufacturer of personal computers currently sells 10,000 units per month of a basic model. The cost of manufacture is $\$ 700 /$ unit, and the wholesale price is $\$ 950$. During the last quarter the manufacturer lowered the price $\$ 100$ in a few test markets, and the result was a $50 \%$ increase in sales. The company has been advertising its product nationwide at a cost of $\$ 50,000$ per month. The advertising agency claims that increasing the advertising budget by $\$ 10,000 /$ month would result in a sales increase of 200 units/month. Management has agreed to consider an increase in the advertising budget to no more than $\$ 100,000 /$ month.
+\subsection{Question}
+(a) Determine the price and the advertising budget that will maximize profit. Use the five-step method. Model as a constrained optimization problem, and solve using the method of Lagrange multipliers.
+ 
+\paragraph{Step 1.}
+$$
+\begin{aligned}
+	\text{Variables:}\\
+	p &= \text{price of a unit (\$)}\\
+	a &= \text{advertise investigation increase(\$/mo)}\\
+	d &= \text{price drop per PC(\$/mo)}\\
+	t &= \text{total amount of PCs sells(/mo)}\\
+	A &= \text{total advertising cost(\$/mo)}\\
+	R &= \text{total revenue(\$/mo)}\\
+	C &= \text{total cost(\$/mo)}\\
+	P &= \text{profit(\$/mo)}\\
+	\text{Assumptions:}\\
+	p &= 950 - d\\
+	A &= 50000 + a\\
+	t &= 10000 + 50d + a/50  \\
+	C &= A +  t\times 700\\
+	R &= tp\\
+	P &= R - C\\
+	t & \geq 0 \\
+	50000\leq A&\leq 100000\\
+	d & \geq 0\\
+	p & \leq 950\\
+	50000\geq a & \geq 0\\
+	\text{Objective:}\\
+	&\text{Maximize}  \quad  P 
+\end{aligned}
+$$
+ \paragraph{Step 2.} Select the modeling approach.
+ 
+ We treat this problem as a constrained optimization problem.
+ 
+ \paragraph{Step 3.} Formulate the model.
+ 
+$$
+ \begin{aligned}
+ P & = R - C \\
+ & = tp  - (A + 700t)\\
+ &= (10000 + 50d + a/50)(950-d) - (50000 + a) - 700(10000 + 50d + a/50)\\
+ &= a \left(4-\frac{d}{50}\right)-50 \left(d^2-50 d-49000\right)
+ \end{aligned}
+$$
+ 
+then the original problem converts to find the maximum value of $f(x,y)$ where
+$$
+f(x,y) = x \left(4-\frac{y}{50}\right)-50 \left(y^2-50 y-49000\right) , 0\leq x\leq 50000, 0\leq y \leq 250
+$$
+
+\paragraph{Step 4.} Solve the model.
+
+Taking the derivative of $f$,
+$$
+\nabla f = \left\{4-\frac{y}{50},-\frac{x}{50}-50 (2 y-50)\right\}
+$$
+
+if we treat the problem as an unconstrained problem, by solving $\nabla f = 0$, we earn 
+$$
+{x = -875000, y = 200}
+$$
+
+which is not lying in the feasible region of the original constrained problem. Hence the feasible optimized solution lies on the boundary of the feasible region.
+
+\subparagraph{Case 1.} Assume that the optimal solution lies on $g(x,y)  = y  = 0$ or 250, then $\nabla g = (0,1)$, let $\nabla f = \lambda \nabla g$ yields:
+$$
+4-\frac{y}{50} = 0 ,\quad 
+-\frac{x}{50}-50 (2 y-50) = \lambda, 
+$$
+
+which is a trivial case, no solution.
+
+\subparagraph{Case 2.} Assume that the optimal solution lies on $g(x,y)  = x  = 0$ or 50000, then $\nabla g = (1,0)$, let $\nabla f = \lambda \nabla g$ yields:
+$$
+4-\frac{y}{50} = \lambda ,\quad 
+-\frac{x}{50}-50 (2 y-50) = 0, 
+$$
+
+When $x = 0$ we get $y = 25, \lambda =  7/2$ and $f =2481250$.
+
+When $x = 50000$ we get $y = 15, \lambda =  37/10$ i.e. $f =2661250$.
+
+Hence the maximum feasible solution is $x=50000,y = 15$, and the objective value is $f =2661250$.
+
+\paragraph{Step 5.} Answer the question.
+
+If the manufacturer sell the price of PC at $\$ 935 (=950 - 15)$ and use the maximum budget to advertising, they will get the maximum profit at $\$ 2661250$.
+
+\subsection{Question}
+
+
+(b) Determine the sensitivity of the decision variables (price and advertising) to price elasticity (the $50 \%$ number).
+  
+  \subsubsection{Sensitivity of price to price elasticity}
+ Substitute 50 by $e$, the objective function becomes
+ 
+ $$
+f(x,y,e) = -e y^2+250 (e-40) y+x \left(4-\frac{y}{50}\right)+2450000
+$$
+
+From the information we have calculated in the last question, we have $x = 50000$. Then we can let $\grad f = \lambda \nabla g$, where $\nabla g = (1,0)$, 
+
+$$
+y= \frac{125 (e-44)}{e},\lambda = -\frac{-3 e-220}{2 e}
+$$
+
+$$
+\begin{aligned}
+	S(p,e )&= \frac{\mathrm d p }{\mathrm d e}\cdot \frac{e}{p} = -0.117647\\
+	S(A,e )&= \frac{\mathrm d A }{\mathrm d e}\cdot \frac{e}{A} = 0\\
+\end{aligned}
+$$
+ 
+which means when $e$ increase by 100\%, the price of PC decreases by 11.76\%.
+
+\subsubsection{Sensitivity of advertising to price elasticity}
+Substitute 200a by k, which is the advertising price elasticity
+$$
+f(x,y,k) = x \left(-\frac{k (y-250)}{10000}-1\right)-50 \left(y^2-50 y-49000\right)
+$$
+
+Solving the equation above using Lagrange multipliers. Let $\nabla f  = \lambda \nabla g$, where $\nabla g = (1,0), x = 50000$.
+
+$$
+\begin{aligned}
+	S(p,k )&= \frac{\mathrm d p }{\mathrm d k}\cdot \frac{k}{p} = 0.0106952\\
+	S(A,k )&= \frac{\mathrm d A }{\mathrm d k}\cdot \frac{k}{A} = 0\\
+\end{aligned}
+$$
+
+Which means if the elasticity price $k$ grows by 100\%, the corresponding price of units will be affected by a growth of 1.07\%.
+
+
+
+
+\sout{(c) Determine the sensitivity of the decision variables to the advertising agency's estimate of 200 new sales each time the advertising budget is increased by $\$ 10,000$ per month.}
+    
+\subsection{Question}
+(d) What is the value of the multiplier found in part (a)? What is the real-world significance of the multiplier? How could you use this information to convince top management to lift the ceiling on advertising expenditures?
+
+The Lagrange multiplier implicitly represents the rate of growth of the profit with respect to the investigation in advertising. Around the maximum profit point, an investigate of \$1 results in a \$3.7 profit.
+
+
+\section{Lagrange multipliers method}
+7. Solve the following constrained optimization problem by Lagrange multipliers method
+
+$$
+\begin{aligned}
+\text { Minimize } & f\left(x_{1}, x_{2}\right)=2 x_{1}^{2}-2 x_{1} x_{2}+2 x_{2}^{2}-6 x_{1} \\
+\text { Subject to } &\left\{\begin{array}{l}
+g_{1}\left(x_{1}, x_{2}\right)=3 x_{1}+4 x_{2}-6 \leq 0 \\
+g_{2}\left(x_{1}, x_{2}\right)=-x_{1}+4 x_{2}-2 \leq 0
+\end{array}\right.
+\end{aligned}
+$$
+
+Hint for 2：
+Method 1. For this problem, the minimum is taken at the boundary of the feasible region. Method 2. Turn the inequality constraints into equality constraints by adding relaxation parameters $x_{3}$ and $x_{4}$. e.g. $3 x_{1}+4 x_{2}-6 \leq 0 \Leftrightarrow 3 x_{1}+4 x_{2}-6+x_{3}^{2}=0$.
+
+
+\paragraph{Sol.} let $x = x_1 $ and $ y  = x_2$.
+
+$$
+\nabla f = \{4 x-2 y-6,4 y-2 x\}
+$$
+
+By solving $\nabla f = 0$ we have $x = 2 $ and $ y = 1$, which is not in the feasible region. Thus the optimal value must lies on the boundary of the feasible set.
+We can apply the Lagrange multiplier method as below,
+
+$$
+\begin{aligned}
+\nabla f &= \lambda \nabla g_1  + \mu \nabla g_2	\\
+\text{i.e.}\quad  \{4 x-2 y-6,4 y-2 x\} & = \lambda \{3,4\} + \mu \{-1,4\}
+\end{aligned}
+$$
+
+\paragraph{Case 1.}
+$$
+\begin{cases}
+	\{-6 + 4 x - 2 y, -2 x + 4 y\}  = \lambda \{3, 4\} + \mu \{-1, 4\},\\\quad 3 x + 4 y - 6 = 0 
+\end{cases}
+$$
+
+And the solution to the above equation is 
+$$
+\mu \to -\frac{37 \lambda }{17}-\frac{12}{17},x\to \frac{16 \lambda }{17}+\frac{30}{17},y\to \frac{3}{17}-\frac{12 \lambda }{17}
+$$
+
+substitute it into the origin function $f$,
+$$
+f\left(\frac{16 \lambda }{17}+\frac{30}{17},\frac{3}{17}-\frac{12 \lambda }{17}\right) = \frac{2}{289} \left(592 \lambda ^2+384 \lambda -711\right)
+$$
+which is a quadratic function, so $f_{min} = -\frac{198}{37}$ when $\lambda = -\frac{12}{37}$. Consequently, $x =  \frac{54}{37},y =  \frac{15}{37}$ can be check that it is in the feasible region.
+
+\paragraph{Case 2.}
+$$
+\begin{cases}
+	\{-6 + 4 x - 2 y, -2 x + 4 y\}  = \lambda \{3, 4\} + \mu \{-1, 4\},\\\quad -x + 4 y - 2 = 0 
+\end{cases}
+$$
+
+And the solution to the above equation is 
+$$
+\mu \to -\frac{1}{13} (17 \lambda ),x\to \frac{16 \lambda }{13}+2,y\to \frac{4 \lambda }{13}+1
+$$
+
+substitute it into the origin function $f$,
+$$
+f = \frac{32 \lambda ^2}{13}-6
+$$
+
+which is a quadratic function, so $f_{min} = -6$ when $\lambda = 0$. However, $x =  2,y =1$ is not a feasible solution.
+
+Hence, the solution to the optimize problem is
+$$
+f_{min} = -\frac{198}{37},\text{at }x =  \frac{54}{37},y =  \frac{15}{37}
+$$
+
+
+
+\end{document}
