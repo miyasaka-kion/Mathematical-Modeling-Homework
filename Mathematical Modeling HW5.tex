@@ -5,13 +5,31 @@
 \usepackage[normalem]{ulem}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 \usepackage{listings}
+\usepackage{amssymb}
 \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
 \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
 \definecolor{mylilas}{RGB}{170,55,241}
-
+\def\ny{\mathcal N \bold y}
+\def\nx{\mathcal N \bold x}
+\def\bx{\bold x}
+\def\by{\bold y}
+\def\tx{T \bold x}
+\def\ty{T \bold y}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\newcommand\vc[1]{\left\langle{#1}\right\rangle }
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}
+\newcommand\bra[1]{\left( #1 \right)}
+\def \xy{\norm{\bx - \by}^2}
+\def \nxny{\norm{\nx  - \ny}^2}
+\def \txty{\norm{\tx  - \ty}^2}
+\def \tt{\tx - \ty}
+\def \xx{\bx - \by}
+\def \pr{\operatorname{prox}_{\|\cdot\|_{1}}}
+\def \px{\pr \bx}
+\def \py{\pr \by}
 
 \title{\textbf{Mathematical Modeling HW5}}
-\author{\textsc{Liao Yilin}, \small {JNUID:2020101881}}
+\author{\textsc{Miyasaka} Kion}
 \date{\today}
 
 \begin{document}	
@@ -34,7 +52,149 @@
     %emph=[2]{word1,word2}, emphstyle=[2]{style},    
 }
 
+\section{Task: Prove proposition 4.1}
+Proposition 4.1. The following are equivalent:
+
+(i) $T$ is firmly nonexpansive.
+
+(ii) $T$ is $\frac{1}{2}$-averaged nonexpansive.
+
+(iii) $\mathcal{I}-T$ is firmly nonexpansive.
+
+(iv) $2 T-\mathcal{I}$ is nonexpansive.
+\paragraph{Proof$_1$} We first prove (ii) and (i) are equivalent, i.e.  $T$ is $\frac{1}{2}$-averaged nonexpansive if and only if $T$ is firmly nonexpansive. $T$ is $\frac{1}{2}$-averaged nonexpansive which means $T$ can be written as $\frac{\mathcal I + \mathcal N}{2}$, where $\mathcal N$ is a non-expansive operator:
+$$
+\norm{ \mathcal N \bold x + \mathcal N \bold y }  \leq \norm{ \bold x - \bold y } \iff \norm{ \mathcal N \bold x + \mathcal N \bold y } ^2 \leq \norm {\bold x - \bold y }^2
+$$
+add some components to construct the inequality above, we have
+$$
+\begin{aligned}
+	\| \bold x - \bold y \|^2 + 2 \langle \bold x - \bold y, \mathcal N \bold x - \mathcal N \bold y \rangle +  \| \mathcal N \bold x + \mathcal N \bold y \| ^2 
+&\leq
+2  \| \bold x - \bold y \|^2 + 2 \langle \bold x - \bold y, \mathcal N \bold x - \mathcal N \bold y \rangle
+\end{aligned}
+$$
+where
+$$
+\begin{aligned}
+	\text{LHS} &= \langle (\bold x - \bold y) + (\mathcal N \bold x - \mathcal N \bold y), (\bold x - \bold y) + (\mathcal N \bold x - \mathcal N \bold y) \rangle \\
+	&= \norm{ \bx - \by + \nx - \ny} \\
+	\text{RHS}&= 2 \langle \bold x - \bold y, \bold x - \bold y\rangle  + 2 \langle \bold x - \bold y , \nx  - \mathcal N \bold y\rangle \\
+	&= 2 \langle \bx - \by  + \nx - \ny ,\bx - \by \rangle
+\end{aligned}
+$$
+Since LHS $\leq$ RHS, we have 
+$$
+\norm{\frac {\bx + \nx}{2} - \frac{\by + \ny}{2}} ^ 2 \leq \vc{\frac{\bx + \nx}{2} - \frac{\by + \ny}{2},\bx - \by}
+$$
+which is equivalent to 
+$$
+\norm{\tx - \ty }^2 \leq \norm{\bx - \by}.
+$$.
+ \QEDA
+\paragraph{Proof$_2$} Now we prove (iii) and (ii) are equivalent, i.e. $\mathcal I- T$ is firmly nonexpansive if and only if   $T$ is $\frac{1}{2}$-averaged nonexpansive.  $\mathcal I- T$  is firmly nonexpansive infers
+$$
+\norm{(\bx - \tx) - (\by - \ty)} ^ 2 \leq \vc{(\bx - \tx) - (\by - \ty), \bx - \by}
+$$
+let $\mathcal N$ such that that $T = \frac{\mathcal I + \mathcal N }{2}$, we have
+$$
+\begin{aligned}
+	\text{LHS}&=\norm{\bra{\bx - \frac{\bx + \nx}{2} } - \bra{\by - \frac{\by + \ny}{2}}}^2\\
+	&= 1/4 \cdot \norm {\bx - \by - \bra{\nx - \ny}}\\
+	\text{RHS}&= 1/2 \cdot \vc{\bx - \by - \bra {\nx - \ny},\bx - \by}
+\end{aligned}
+$$
+Then,
+$$
+ \begin{aligned}
+ 	&\norm {\bx - \by - \bra{\nx - \ny}}^2  \leq  2 \vc{\bx - \by - \bra {\nx - \ny},\bx - \by} \\
+ 	&\iff  \\
+ 	 &\norm{\bx - \by}^2  + \norm{\nx - \ny}^2  - 2 \vc{\bx - \by - \bra {\nx - \ny},\bx - \by} \leq  2 \vc{\bx - \by}^2 - 2 \vc{\bx - \by - \bra {\nx - \ny},\bx - \by} \\
+ 	& \iff \\
+ 	& \norm{\nx - \ny}^2 \leq  \xy 
+ \end{aligned}
+$$
+If  $\mathcal I- T$ is firmly nonexpansive, we can assume that $\mathcal N$ does not exist, the above inequality cannot satisfied, i.e. there exist a nonexpansive operator $\mathcal N$ s.t.  $T = \frac{\mathcal I + \mathcal N }{2}$. If  $T$ is $\frac{1}{2}$-averaged nonexpansive, then let $\mathcal N$ be a nonexpasive operator s.t. $T = \frac{\mathcal I + \mathcal N }{2}$, we can infer that  $\mathcal I- T$ is firmly nonexpansive,
+
+\QEDA
+\paragraph{Proof$_3$} Finally we prove (i) and (iv) are equivalent, i.e. $2 T-\mathcal{I}$ is nonexpansive if and only if  $T$ is firmly nonexpansive. $2 T-\mathcal{I}$ is nonexpansive means 
+$$
+\begin{aligned}
+	\norm{\bra{2\tx  - \bx}- \bra {2\ty  - \by}} &\leq  \norm{\bx - \by}\\
+	\iff \norm{2\bra{\tx - \ty} - \bra{\bx - \by}}^2 &\leq \xy\\
+	\iff 4 \txty  + \xy- 4 \vc{\tt,\xx} &\leq \xy \\
+	\iff \txty &\leq \xy \\
+	\iff \norm{\tt} &\leq \norm{\bx - \by}\quad \text{($T$ is nonexpansive)}
+\end{aligned}
+$$
+\QEDA
+
+\section{Task: $\operatorname{prox}_{\|\cdot\|_{1}}$ is firmly nonexpansive}  Prove that $\operatorname{prox}_{\|\cdot\|_{1}}$ is firmly nonexpansive according to (3.7) and (3.8). (Don't use Theorem 4.1 !!!)
+\begin{itemize}
+	\item One-dimensional case
+For $x \in \mathbb{R}$,
+$$
+\operatorname{prox}_{|\cdot|}(x)=\max \{|x|-1,0\} \cdot \operatorname{sgn}(x)
+$$
+\item $n$-dimensional case
+For $\boldsymbol{x} \in \mathbb{R}^{n}$,
+$$
+\operatorname{prox}_{\|\cdot\|_{1}}(\boldsymbol{x})=\left(\operatorname{prox}_{|\cdot|}\left(x_{1}\right), \operatorname{prox}_{|\cdot|}\left(x_{2}\right), \ldots, \operatorname{prox}_{|\cdot|}\left(x_{n}\right)\right)^{\top}
+$$
+\end{itemize}
+
+\paragraph{Proof} We prove by mathematical induction.
+\subparagraph{Base case: 1-dimension case}
+$\pr$ is defined by
+$$
+\pr (x) = \max \{|x|-1,0\} \cdot \operatorname{sgn}(x)
+$$
+We hope $\pr$ is firmly nonexpansive i.e. we hope that
+$$
+\begin{aligned}
+	\norm{\pr \bx - \pr \by}^2 \leq \vc{\ \pr \bx - \pr \by,\bx - \by} \\
+\iff \vc{\pr \bx - \pr \by , \pr \bx - \pr \by - (\bx - \by ) }\leq 0
+\end{aligned}
+$$
+We expand the LHS above,
+$$
+\begin{aligned}
+	&\text{LHS} \\
+	&= (\text{sgn}(x) \max (0,| x| -1)-\text{sgn}(y) \max (0,| y| -1)) (\text{sgn}(x) \max (0,| x| -1)-\text{sgn}(y) \max (0,| y| -1)-x-y) \\
+	&=\begin{cases}
+		 (| x| -1) \text{sgn}(x) ((| x| -1) \text{sgn}(x)-x+y) & | x| >1\land | y| \leq 1 \\
+ ((| x| -1) \text{sgn}(x)-(| y| -1) \text{sgn}(y)) ((| x| -1) \text{sgn}(x)-| y|  \text{sgn}(y)+\text{sgn}(y)-x+y) & | x| >1\land | y| >1 \\
+ (| y| -1) \text{sgn}(y) ((| y| -1) \text{sgn}(y)+x-y) & | x| \leq 1\land | y| >1 \\
+	\end{cases}
+ \\
+ &\leq 0 \quad \text{(Since the maximum of all cases are less or equal than 0 ).}
+\end{aligned}
+$$
 
 
 
+Therefore, $\pr$ is a firmly nonexpansive when dimension is 1.
+
+\subparagraph{Induction step}
+if $\pr$ is firmly nonexpensive when $\bx \in \mathbb R^n$, i.e. by definition of $\pr$, we have
+$$
+\norm{\px - \py}^2 \leq \vc{\px - \py, \bx - \by}
+$$
+which is equivalent to 
+$$
+\sum_{i=1}^{n}\bra{\pr x_i - \pr y_i}^2 \leq \sum_{i=1}^{n}\bra{\pr x_i - \pr y_i}\cdot \bra{x_i - y_i}
+$$
+for $\pr$ is firmly nonexpansive when dimension is 1, 
+$$
+\bra{\pr x_{n+1} - \pr y_{n+1} }^2 \leq\bra{\pr x_{n+1} - \pr y_{n+1}}\bra{x_{n+1} - y_{n+1}}
+$$
+by adding the 2 inequality above we get 
+$$
+\sum_{i=1}^{n+1}\bra{\pr x_i - \pr y_i}^2 \leq \sum_{i=1}^{n+1}\bra{\pr x_i - \pr y_i}\cdot \bra{x_i - y_i}
+$$
+which infers that $\norm{\px - \py}^2 \leq \vc{\px - \py, \bx - \by}$ holds when $\bx \in \mathbb R^{n+1}$.
+
+Hence $\pr$ is firmly nonexpansive.
+
+\QEDA
 \end{document}
